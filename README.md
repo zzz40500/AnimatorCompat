@@ -36,9 +36,24 @@ myView.animate().x(50f).y(100f);
 
 
 
-#AnimatorCompat 的使用
-我们可以使用AnimatorCompat来对动画的创建.
+#使用AnimatorCompat创建动画    
+我们可以使用AnimatorCompat来快速动画的创建.    
+###gradle
+/build.gradle
+~~~
+jitpack.io
 
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+~~~
+/app/build.gradle
+~~~
+compile 'com.github.zzz40500:AnimatorCompat:0.1'
+~~~
+###usage
 eg:
 ~~~
 //不同 ObjectAnimator 动画的组合
