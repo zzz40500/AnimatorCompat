@@ -1,5 +1,5 @@
 # AnimatorCompat
-AnimatorCompat: 一个快速创建动画帮助类   
+AnimatorCompat: 一个快速创建动画帮助库   
 [github](https://github.com/zzz40500/AnimatorCompat)
 
 #前言 
@@ -19,7 +19,7 @@ animSetXY.playTogether(animX, animY);   
  animSetXY.start();
 ~~~
 这种方式也有几个缺点:   
-1. propertyName 是 String 类型.String 类型可能导致漏写,多写,写错的风险.  
+1. propertyName 是 String 类型.String 类型可能导致漏写,多写,写错.  
 2. 当多个动画组合的时候代码变成很长很长.   
 
 
