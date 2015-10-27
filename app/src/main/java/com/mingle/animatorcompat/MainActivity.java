@@ -3,6 +3,8 @@ package com.mingle.animatorcompat;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_open_github) {
+             Uri uri = Uri.parse("https://github.com/zzz40500/AnimatorCompat");
+            Intent it = new Intent(Intent.ACTION_VIEW, uri);
+             startActivity(it);
 
             return true;
         }
@@ -55,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick1(View view) {
+
+
+//        AnimatorCompat.animate(view).scaleY(0f).scaleX(0f).translationX(200).start();
 
         AnimatorCompat.animate(mTv).translationX(0, 200).translationY(0, 600).alpha(1, 0, 1).setDuration(1000).setInterpolator(new DecelerateInterpolator()).sequentially()
 
@@ -70,10 +78,9 @@ public class MainActivity extends AppCompatActivity {
         AnimatorCompat
                 .animate(mTv).rotationX(0, 360).translationY(0, 600).alpha(1, 0, 1).setDuration(3000).setInterpolator(new DecelerateInterpolator())
                 .together()
-
                 .animate(mTv).rotationY(0, 360).setDuration(1000)
                 .sequentially()
-                .animate(mTv).translationY(600, 0).setDuration(1000).together().animate(mTv).rotationX(360,0).setDuration(2000)
+                .animate(mTv).translationY(600, 0).setDuration(1000).together().animate(mTv).rotationX(360, 0).setDuration(2000)
                 .start();
 
     }
@@ -101,13 +108,13 @@ public class MainActivity extends AppCompatActivity {
                 ViewCompat.setTranslationX(mTv, (Float) valueAnimator.getAnimatedValue());
 
             }
-        }).together().ofFloat(800, 0).setDuration(1200).addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        }).together().ofFloat(800, 0).setDuration(700).addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 ViewCompat.setTranslationY(mTv, (Float) valueAnimator.getAnimatedValue());
 
             }
-        }).setDuration(3000).start();
+        }).start();
 
 
     }

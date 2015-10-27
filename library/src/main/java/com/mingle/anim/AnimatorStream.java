@@ -79,19 +79,19 @@ public class AnimatorStream {
     }
 
 
-    public AnimatorStream together(Stream zObjectAnimator) {
+    public Bridge together(Stream zObjectAnimator) {
         List<ZAnimator> zAnimators = zObjectAnimator.getStream().getObjectAnimators();
         if (zAnimators.size() > 0) {
             mAnimatorCompat.addAllZAnimator(zAnimators);
         }
-        return this;
+        return getStreamBridge();
     }
-    public AnimatorStream together(Animator animator) {
+    public Bridge together(Animator animator) {
 
         if(animator != null){
             mAnimatorCompat.addZAnimator(new DefaultZAnimator(animator));
         }
-        return this;
+        return getStreamBridge();
     }
 
     public Build together() {
@@ -104,15 +104,15 @@ public class AnimatorStream {
         return new Build(this, mAnimatorCompat, true);
     }
 
-    public AnimatorStream sequentially(Stream zObjectAnimator) {
+    public Bridge sequentially(Stream zObjectAnimator) {
         List<ZAnimator> zAnimators = zObjectAnimator.getStream().getObjectAnimators();
         if (zAnimators.size() > 0) {
             zAnimators.get(0).setSequentially(true);
             mAnimatorCompat.addAllZAnimator(zAnimators);
         }
-        return this;
+        return getStreamBridge();
     }
-    public AnimatorStream sequentially(Animator animator) {
+    public Bridge sequentially(Animator animator) {
         if(animator != null){
 
             DefaultZAnimator defaultZAnimator =new DefaultZAnimator(animator);
@@ -120,26 +120,32 @@ public class AnimatorStream {
             defaultZAnimator.setSequentially(true);
             mAnimatorCompat.addZAnimator(defaultZAnimator);
         }
-        return this;
+        return getStreamBridge();
     }
 
 
 
-    public class  Stream{
+    private Bridge mStreamBridge;
 
-        AnimatorCompat  getStream(){
-
-            return  mAnimatorCompat;
+    public Bridge  getStreamBridge(){
+        if(mStreamBridge==null){
+            mStreamBridge=new Bridge();
         }
-        public AnimatorStream together(Animator animator) {
+        return mStreamBridge;
+    }
+
+    public class Bridge{
+
+
+        public Bridge together(Animator animator) {
 
             return AnimatorStream.this.together(animator);
         }
-        public AnimatorStream sequentially(Animator animator) {
+        public Bridge sequentially(Animator animator) {
             return AnimatorStream.this.sequentially(animator);
         }
 
-        public AnimatorStream together(Stream zObjectAnimator) {
+        public Bridge together(Stream zObjectAnimator) {
 
             return AnimatorStream.this.together(zObjectAnimator);
         }
@@ -154,7 +160,44 @@ public class AnimatorStream {
             return AnimatorStream.this.sequentially();
         }
 
-        public AnimatorStream sequentially(Stream zObjectAnimator) {
+        public Bridge sequentially(Stream zObjectAnimator) {
+
+            return AnimatorStream.this.sequentially(zObjectAnimator);
+        }
+
+    }
+
+
+    public class  Stream{
+
+        AnimatorCompat  getStream(){
+
+            return  mAnimatorCompat;
+        }
+        public Bridge together(Animator animator) {
+
+            return AnimatorStream.this.together(animator);
+        }
+        public Bridge sequentially(Animator animator) {
+            return AnimatorStream.this.sequentially(animator);
+        }
+
+        public Bridge together(Stream zObjectAnimator) {
+
+            return AnimatorStream.this.together(zObjectAnimator);
+        }
+
+        public Build together() {
+
+            return AnimatorStream.this.together();
+        }
+
+        public Build sequentially() {
+
+            return AnimatorStream.this.sequentially();
+        }
+
+        public Bridge sequentially(Stream zObjectAnimator) {
 
             return AnimatorStream.this.sequentially(zObjectAnimator);
         }
@@ -162,6 +205,7 @@ public class AnimatorStream {
         public void start() {
             AnimatorStream.this.start();
         }
+
         public Animator build(){
 
             return   AnimatorStream.this.build();
@@ -176,7 +220,7 @@ public class AnimatorStream {
         private ZObjectAnimator mTargetAnimator;
 
         public ZObjectAnimatorStream(Object target) {
-            mTargetAnimator = new ZObjectAnimator( target,mAnimatorCompat.isSequentially());
+            mTargetAnimator = new ZObjectAnimator( target);
             mAnimatorCompat.addZAnimator(mTargetAnimator);
         }
 
@@ -184,14 +228,25 @@ public class AnimatorStream {
             mTargetAnimator.isSequentially = isSequentially;
         }
 
-        public void anim(String propertyValues, float... arg) {
+        public ZObjectAnimatorStream anim(String propertyValues, float... arg) {
             mTargetAnimator.anim(propertyValues, arg);
+            return  this;
         }
 
 
         public ZObjectAnimatorStream alpha(float... arg) {
 
             mTargetAnimator.alpha(arg);
+            return this;
+        }
+       public ZObjectAnimatorStream scaleX(float... arg) {
+
+            mTargetAnimator.scaleX(arg);
+            return this;
+        }
+       public ZObjectAnimatorStream scaleY(float... arg) {
+
+            mTargetAnimator.scaleY(arg);
             return this;
         }
 

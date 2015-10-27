@@ -30,10 +30,9 @@ public class ZObjectAnimator implements ZAnimator {
 
     private AnimListenerAdapter mAnimListenerAdapter;
 
-    public ZObjectAnimator(Object o, boolean isSequentially) {
+    public ZObjectAnimator(Object o) {
         mTarget = o;
         mAnimator = newObjectAnimator();
-        this.isSequentially = isSequentially;
     }
 
     public void anim(String propertyValues, float... arg) {
@@ -67,6 +66,15 @@ public class ZObjectAnimator implements ZAnimator {
         addAnim(PropertyValuesHolder.ofFloat("x", arg));
     }
 
+    public void scaleX(float... arg) {
+
+        addAnim(PropertyValuesHolder.ofFloat("scaleX", arg));
+    }
+
+    public void scaleY(float... arg) {
+
+        addAnim(PropertyValuesHolder.ofFloat("scaleY", arg));
+    }
     public void translationX(float... arg) {
 
         addAnim(PropertyValuesHolder.ofFloat("translationX", arg));
